@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { requireAdminOrThrow } from "@/lib/auth";
 import { createLandscapeProject } from "@/lib/factories";
 import { landscapeStorage } from "@/lib/storage/landscapeStorage";
 import type { AnalysisPurpose } from "@/types";
@@ -20,6 +21,8 @@ function parseAnalysisPurpose(value: string): AnalysisPurpose {
 }
 
 export async function createProjectAction(formData: FormData) {
+  await requireAdminOrThrow();
+
   const companyName = String(formData.get("companyName") ?? "").trim();
   if (!companyName) {
     throw new Error("Company name is required");
@@ -51,6 +54,8 @@ export async function createProjectAction(formData: FormData) {
 }
 
 export async function deleteProjectAction(id: string) {
+  await requireAdminOrThrow();
+
   await landscapeStorage.delete(id);
   revalidatePath("/");
 }

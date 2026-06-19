@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
+import { requireAdminOrReturn401 } from "@/lib/auth";
+import { storageErrorResponse } from "@/lib/api/storageErrorResponse";
 import {
   classifyCandidates,
   MAX_CLASSIFY_BATCH,
 } from "@/lib/candidates/classifyService";
-import { ProjectNotFoundError } from "@/lib/storage/errors";
 
 type ClassifyRequestBody = {
   projectId?: string;
@@ -12,6 +13,9 @@ type ClassifyRequestBody = {
 };
 
 export async function POST(request: Request) {
+  const authError = await requireAdminOrReturn401();
+  if (authError) return authError;
+
   let body: ClassifyRequestBody;
   try {
     body = (await request.json()) as ClassifyRequestBody;
@@ -45,9 +49,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
-    if (error instanceof ProjectNotFoundError) {
-      return NextResponse.json({ error: error.message }, { status: 404 });
-    }
+    const storageResponse = storageErrorResponse(error);
+    if (storageResponse) return storageResponse;
 
     const message =
       error instanceof Error ? error.message : "Classification failed";

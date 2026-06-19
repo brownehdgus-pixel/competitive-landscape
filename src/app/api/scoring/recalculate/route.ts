@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import { requireAdminOrReturn401 } from "@/lib/auth";
+import { storageErrorResponse } from "@/lib/api/storageErrorResponse";
 import { recalculateScores } from "@/lib/candidates/classifyService";
-import { ProjectNotFoundError } from "@/lib/storage/errors";
 
 type RecalculateRequestBody = {
   projectId?: string;
@@ -8,6 +9,9 @@ type RecalculateRequestBody = {
 };
 
 export async function POST(request: Request) {
+  const authError = await requireAdminOrReturn401();
+  if (authError) return authError;
+
   let body: RecalculateRequestBody;
   try {
     body = (await request.json()) as RecalculateRequestBody;
@@ -26,9 +30,8 @@ export async function POST(request: Request) {
     const result = await recalculateScores(body.projectId, body.candidateIds);
     return NextResponse.json(result);
   } catch (error) {
-    if (error instanceof ProjectNotFoundError) {
-      return NextResponse.json({ error: error.message }, { status: 404 });
-    }
+    const storageResponse = storageErrorResponse(error);
+    if (storageResponse) return storageResponse;
 
     const message =
       error instanceof Error ? error.message : "Recalculation failed";

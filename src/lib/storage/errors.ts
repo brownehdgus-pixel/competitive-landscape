@@ -35,3 +35,13 @@ export class LandscapesFileError extends Error {
     }
   }
 }
+
+export class GitHubStorageError extends Error {
+  readonly statusCode?: number;
+
+  constructor(message: string, statusCode?: number) {
+    super(message);
+    this.name = "GitHubStorageError";
+    this.statusCode = statusCode;
+  }
+}

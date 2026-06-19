@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { requireAdminOrThrow } from "@/lib/auth";
 import {
   reclassifyCandidate,
   resetToLlmClassification,
@@ -20,6 +21,8 @@ export async function updateReviewStatusAction(
   candidateId: string,
   reviewStatus: ReviewStatus
 ) {
+  await requireAdminOrThrow();
+
   await updateReviewStatus(projectId, candidateId, reviewStatus);
   revalidateProject(projectId);
 }
@@ -29,6 +32,8 @@ export async function reclassifyCandidateAction(
   candidateId: string,
   candidateType: ManualReclassifyType
 ) {
+  await requireAdminOrThrow();
+
   await reclassifyCandidate(projectId, candidateId, candidateType);
   revalidateProject(projectId);
 }
@@ -38,6 +43,8 @@ export async function updateUserNoteAction(
   candidateId: string,
   userNote: string
 ) {
+  await requireAdminOrThrow();
+
   await updateUserNote(projectId, candidateId, userNote);
   revalidateProject(projectId);
 }
@@ -46,6 +53,8 @@ export async function resetToLlmClassificationAction(
   projectId: string,
   candidateId: string
 ) {
+  await requireAdminOrThrow();
+
   await resetToLlmClassification(projectId, candidateId);
   revalidateProject(projectId);
 }

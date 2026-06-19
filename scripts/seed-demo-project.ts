@@ -1,55 +1,14 @@
 /**
- * 데모 프로젝트 시드 — API Key 없이 UI E2E용
- * 실행: npm run seed:demo
- *
- * landscapes.json에 분류·승인된 샘플 프로젝트 1건을 주입합니다.
- * 브라우저에서 http://localhost:3000 → 데모 프로젝트 Workbench 확인.
+ * 데모 프로젝트 시드 — 후보만 추가 (Unclassified)
+ * 실행: npm run seed
+ * 다음: npm run classify:seed
  */
-import { applyClassificationToCandidate } from "../src/lib/candidates/classifyService";
 import { createCandidate } from "../src/lib/candidates/candidateService";
-import { updateReviewStatus } from "../src/lib/candidates/reviewService";
-import { parseLlmClassifyOutput } from "../src/lib/openai/classifySchema";
-import { generateProjectReport } from "../src/lib/report/reportService";
 import { createLandscapeProject } from "../src/lib/factories";
 import { landscapeStorage } from "../src/lib/storage/landscapeStorage";
+import { DEMO_CANDIDATES, DEMO_COMPANY } from "./demo-constants";
 
-const DEMO_COMPANY = "Demo Target Bio (E2E)";
-
-const DIRECT_JSON = JSON.stringify({
-  candidateType: "Direct Competitor",
-  confidence: 0.85,
-  rationale: "Same mRNA modality and overlapping oncology market.",
-  caveat: "Limited public pipeline detail.",
-  technologySimilarityScore: 85,
-  marketSimilarityScore: 80,
-  businessModelSimilarityScore: 70,
-  stageSimilarityScore: 60,
-  fundingMnaRelevanceScore: 50,
-  strategicBuyerInvestorFitScore: 55,
-  valuationUsabilityScore: 45,
-  geographyRegulatorySimilarityScore: 65,
-});
-
-const LISTED_JSON = JSON.stringify({
-  candidateType: "Comparable Listed Company",
-  confidence: 0.72,
-  rationale: "Public oncology biotech useful as listed comparable.",
-  technologySimilarityScore: 60,
-  marketSimilarityScore: 70,
-  businessModelSimilarityScore: 75,
-  stageSimilarityScore: 80,
-  fundingMnaRelevanceScore: 40,
-  strategicBuyerInvestorFitScore: 50,
-  valuationUsabilityScore: 90,
-  geographyRegulatorySimilarityScore: 70,
-});
-
-async function addClassifiedCandidate(
-  projectId: string,
-  companyName: string,
-  llmJson: string,
-  reviewStatus: "Approved" | "Pending" = "Approved"
-) {
+async function addRawCandidate(projectId: string, companyName: string) {
   const formData = new FormData();
   formData.set("companyName", companyName);
   formData.set("listedStatus", "private");
@@ -64,29 +23,7 @@ async function addClassifiedCandidate(
   );
   formData.set("evidenceSnippet", `${companyName} — demo evidence snippet`);
 
-  const candidate = await createCandidate(projectId, formData);
-  const project = await landscapeStorage.getById(projectId);
-  if (!project) throw new Error("project not found");
-
-  const classification = parseLlmClassifyOutput(llmJson);
-  const index = project.candidates.findIndex((c) => c.id === candidate.id);
-  if (index === -1) throw new Error("candidate not found after create");
-
-  const classified = applyClassificationToCandidate(
-    project.candidates[index],
-    classification,
-    project.target.analysisPurpose
-  );
-
-  const candidates = [...project.candidates];
-  candidates[index] = classified;
-  await landscapeStorage.update(projectId, { candidates });
-
-  if (reviewStatus === "Approved") {
-    await updateReviewStatus(projectId, candidate.id, "Approved");
-  }
-
-  return candidate.id;
+  return createCandidate(projectId, formData);
 }
 
 async function main() {
@@ -113,40 +50,22 @@ async function main() {
 
   await landscapeStorage.create(project);
 
-  await addClassifiedCandidate(project.id, "Rival mRNA Corp", DIRECT_JSON);
-  await addClassifiedCandidate(
-    project.id,
-    "Listed Oncology Inc",
-    LISTED_JSON
-  );
-  await addClassifiedCandidate(
-    project.id,
-    "Pending Peer Ltd",
-    DIRECT_JSON,
-    "Pending"
-  );
-
-  await generateProjectReport(project.id, {
-    includePendingInAppendix: true,
-    skipImplications: true,
-  });
+  for (const item of DEMO_CANDIDATES) {
+    await addRawCandidate(project.id, item.companyName);
+  }
 
   const loaded = await landscapeStorage.getById(project.id);
-  const approved = loaded!.candidates.filter(
-    (c) => c.reviewStatus === "Approved"
-  ).length;
 
-  console.log("Demo seed: OK");
+  console.log("Seed: OK");
   console.log(`  Project ID: ${project.id}`);
   console.log(`  Company:    ${DEMO_COMPANY}`);
-  console.log(`  Candidates: ${loaded!.candidates.length} (${approved} approved)`);
-  console.log(`  Report:     ${loaded!.report ? "generated" : "missing"}`);
+  console.log(`  Candidates: ${loaded!.candidates.length} (all Unclassified)`);
   console.log("");
-  console.log("Next: npm run dev → http://localhost:3000");
-  console.log(`      Open workbench: /projects/${project.id}`);
+  console.log("Next: npm run classify:seed");
+  console.log(`      npm run dev → /projects/${project.id}`);
 }
 
 main().catch((error) => {
-  console.error("Demo seed: FAILED", error);
+  console.error("Seed: FAILED", error);
   process.exit(1);
 });

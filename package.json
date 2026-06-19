@@ -19,6 +19,9 @@
     "verify:step8": "tsx scripts/verify-step8.ts",
     "verify:step9": "tsx scripts/verify-step9.ts",
     "seed:demo": "tsx scripts/seed-demo-project.ts",
+    "seed": "tsx scripts/seed-demo-project.ts",
+    "classify:seed": "tsx scripts/classify-seed.ts",
+    "mock:classify": "tsx scripts/mock-classify.ts",
     "e2e:manual": "tsx scripts/e2e-manual.ts",
     "e2e:full": "tsx scripts/e2e-full.ts"
   },

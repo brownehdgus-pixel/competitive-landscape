@@ -1,21 +1,30 @@
 import Link from "next/link";
+import { AppShell } from "@/components/layout/AppShell";
+import { ProjectListTable } from "@/components/projects/ProjectListTable";
+import { landscapeStorage } from "@/lib/storage/landscapeStorage";
 
-export default function Home() {
+export default async function HomePage() {
+  const projects = await landscapeStorage.getAll();
+
   return (
-    <section className="rounded-lg border border-memo-border bg-memo-surface p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-memo-ink">프로젝트 목록</h2>
-      <p className="mt-2 text-sm text-memo-muted">
-        Step 0 완료. Step 3에서 프로젝트 생성·목록 UI가 연결됩니다.
-      </p>
-      <div className="mt-6 rounded-md border border-dashed border-memo-border bg-memo-accent-light px-4 py-8 text-center text-sm text-memo-muted">
-        등록된 Landscape 프로젝트가 없습니다.
+    <AppShell>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-xl font-semibold text-memo-ink">
+            Competitive Landscape Builder
+          </h1>
+          <p className="mt-1 text-sm text-memo-muted">
+            보고서 참조용 경쟁사·비교기업 워크벤치
+          </p>
+        </div>
+        <Link
+          href="/projects/new"
+          className="inline-flex items-center rounded-md bg-memo-accent px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+        >
+          New Project
+        </Link>
       </div>
-      <Link
-        href="/projects/new"
-        className="mt-4 inline-flex items-center rounded-md bg-memo-accent px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
-      >
-        새 프로젝트 만들기
-      </Link>
-    </section>
+      <ProjectListTable projects={projects} />
+    </AppShell>
   );
 }

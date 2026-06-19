@@ -9,22 +9,36 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "verify:step1": "tsx scripts/verify-step1.ts",
+    "verify:step2": "tsx scripts/verify-step2.ts",
+    "verify:step3": "tsx scripts/verify-step3-stats.ts",
+    "verify:step4": "tsx scripts/verify-step4.ts",
+    "verify:step5": "tsx scripts/verify-step5.ts",
+    "verify:step7": "tsx scripts/verify-step7.ts",
+    "verify:step8": "tsx scripts/verify-step8.ts",
+    "verify:step9": "tsx scripts/verify-step9.ts",
+    "seed:demo": "tsx scripts/seed-demo-project.ts",
+    "e2e:manual": "tsx scripts/e2e-manual.ts",
+    "e2e:full": "tsx scripts/e2e-full.ts"
   },
   "dependencies": {
+    "next": "15.5.19",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.19"
+    "xlsx": "^0.18.5",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.19",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "tsx": "^4.19.4",
+    "typescript": "^5"
   }
 }

@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local user data (do not commit real project/candidate data)
+/data/landscapes.json

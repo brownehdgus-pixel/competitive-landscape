@@ -1,26 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --memo-bg: #f8f9fb;
+  --memo-surface: #ffffff;
+  --memo-border: #e2e8f0;
+  --memo-ink: #1e293b;
+  --memo-muted: #64748b;
+  --memo-accent: #334155;
+  --memo-accent-light: #f1f5f9;
+  --memo-highlight: #0f766e;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-memo-bg: var(--memo-bg);
+  --color-memo-surface: var(--memo-surface);
+  --color-memo-border: var(--memo-border);
+  --color-memo-ink: var(--memo-ink);
+  --color-memo-muted: var(--memo-muted);
+  --color-memo-accent: var(--memo-accent);
+  --color-memo-accent-light: var(--memo-accent-light);
+  --color-memo-highlight: var(--memo-highlight);
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--memo-bg);
+  color: var(--memo-ink);
+  font-family: var(--font-sans);
 }

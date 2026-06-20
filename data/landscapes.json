@@ -185,11 +185,12 @@
         "customerGroup": "글로벌 제약사·바이오텍 기술이전 파트너, 항암제 개발사, 공동연구/라이선스 파트너",
         "businessModel": "자체 플랫폼 기반 후보물질 발굴 후 전임상·초기임상 단계에서 공동개발, 기술이전, 라이선스아웃을 추진하는 신약개발형 플랫폼 바이오텍",
         "developmentStage": "비상장 초기 바이오텍; Pre-A 투자유치 이력 보유, 후보물질 최적화·비임상·IND 준비 및 초기 임상 진입 준비 단계",
-        "analysisPurpose": "Both"
+        "analysisPurpose": "Both",
+        "website": "https://www.pintherapeutics.com/kor/company/overview.html"
       },
       "candidates": [],
       "createdAt": "2026-06-20T14:12:42.559Z",
-      "updatedAt": "2026-06-20T14:12:42.689Z"
+      "updatedAt": "2026-06-20T14:43:21.471Z"
     }
   ]
 }

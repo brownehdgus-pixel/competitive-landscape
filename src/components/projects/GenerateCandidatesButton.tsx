@@ -8,6 +8,34 @@ type GenerateCandidatesButtonProps = {
   onComplete: (result: GenerateCandidatesResult) => void;
 };
 
+function formatSuccessMessage(result: GenerateCandidatesResult): string {
+  const parts: string[] = [];
+
+  if (result.addedCount > 0) {
+    parts.push(`Added ${result.addedCount} candidate${result.addedCount === 1 ? "" : "s"}`);
+  } else {
+    parts.push("Added 0 candidates");
+  }
+
+  const skipParts: string[] = [];
+  if (result.skippedDuplicateCount > 0) {
+    skipParts.push(
+      `${result.skippedDuplicateCount} duplicate${result.skippedDuplicateCount === 1 ? "" : "s"}`
+    );
+  }
+  if (result.skippedMalformedCount > 0) {
+    skipParts.push(
+      `${result.skippedMalformedCount} malformed candidate${result.skippedMalformedCount === 1 ? "" : "s"}`
+    );
+  }
+
+  if (skipParts.length > 0) {
+    parts.push(`Skipped ${skipParts.join(" and ")}`);
+  }
+
+  return `${parts.join(". ")}. AI-suggested candidates were added as Pending. Please verify listed status and sources before using them in a report.`;
+}
+
 export function GenerateCandidatesButton({
   projectId,
   onComplete,
@@ -34,9 +62,7 @@ export function GenerateCandidatesButton({
         return;
       }
 
-      setMessage(
-        `Added ${data.addedCount} candidate(s), skipped ${data.skippedDuplicateCount} duplicate(s). AI-suggested candidates were added as Pending. Please verify sources before using them in a report.`
-      );
+      setMessage(formatSuccessMessage(data));
       onComplete(data);
     } catch (error) {
       setMessage(

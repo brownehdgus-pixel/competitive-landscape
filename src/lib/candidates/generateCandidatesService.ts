@@ -1,5 +1,5 @@
 import { generateCandidatesWithLlm } from "@/lib/openai/generateCandidates";
-import type { SuggestedCandidate } from "@/lib/openai/generateCandidatesSchema";
+import { generatedCandidateNormalizedSchema } from "@/lib/openai/generateCandidatesSchema";
 import {
   ClassifyParseError,
   ClassifyValidationError,
@@ -10,60 +10,69 @@ import {
   createCandidateCompany,
   createEvidenceSource,
 } from "@/lib/factories";
+import { normalizeCompanyNameKey } from "@/lib/normalizers/normalizeCompanyNameKey";
+import {
+  normalizeGeneratedCandidate,
+  type NormalizedGeneratedCandidate,
+} from "@/lib/normalizers/normalizeGeneratedCandidate";
 import { ProjectNotFoundError } from "@/lib/storage/errors";
 import { landscapeStorage } from "@/lib/storage/landscapeStorage";
 import type { CandidateCompany } from "@/types";
 
+export type SkippedDuplicateEntry = {
+  companyName: string;
+};
+
+export type SkippedMalformedEntry = {
+  companyName?: string;
+  reason: string;
+};
+
 export type GenerateCandidatesResult = {
   addedCount: number;
   skippedDuplicateCount: number;
-  added: CandidateCompany[];
+  skippedMalformedCount: number;
+  candidates: CandidateCompany[];
+  skippedDuplicates: SkippedDuplicateEntry[];
+  skippedMalformed: SkippedMalformedEntry[];
 };
 
-function normalizeCompanyName(name: string): string {
-  return name.trim().toLowerCase();
+function optionalString(value: string): string | undefined {
+  return value.trim() ? value.trim() : undefined;
 }
 
-function buildExistingNameSet(candidates: CandidateCompany[]): Set<string> {
-  return new Set(candidates.map((c) => normalizeCompanyName(c.companyName)));
-}
-
-function isDuplicate(
-  name: string,
-  existingNames: Set<string>,
-  batchNames: Set<string>
-): boolean {
-  const normalized = normalizeCompanyName(name);
-  return existingNames.has(normalized) || batchNames.has(normalized);
-}
-
-function suggestedToCandidate(suggested: SuggestedCandidate): CandidateCompany {
-  const evidenceSnippet =
-    suggested.rationale ?? suggested.memo ?? "AI-suggested candidate for human review.";
-
-  const evidence = createEvidenceSource({
-    sourceTitle: "AI suggestion",
-    sourceUrl: suggested.sourceUrl ?? suggested.website,
-    sourceType: "manual",
-    evidenceSnippet,
-    confidenceLevel: "Low",
-  });
-
+function mapNormalizedToCandidateCompany(
+  normalized: NormalizedGeneratedCandidate
+): CandidateCompany {
   return createCandidateCompany({
-    companyName: suggested.companyName.trim(),
-    country: suggested.country,
-    listedStatus: suggested.listedStatus ?? "unknown",
-    website: suggested.website,
-    technology: suggested.technology,
-    product: suggested.product,
-    indicationOrMarket: suggested.indicationOrMarket,
-    customerGroup: suggested.customerGroup,
-    businessModel: suggested.businessModel,
-    developmentStage: suggested.developmentStage,
-    memo: suggested.memo ?? suggested.rationale,
-    evidenceSources: [evidence],
-    candidateType: "Unclassified",
+    companyName: normalized.companyName,
+    country: optionalString(normalized.country),
+    listedStatus: normalized.listedStatus,
+    ticker: optionalString(normalized.ticker),
+    exchange: optionalString(normalized.exchange),
+    website: optionalString(normalized.website),
+    technology: optionalString(normalized.technology),
+    product: optionalString(normalized.product),
+    indicationOrMarket: optionalString(normalized.indicationOrMarket),
+    customerGroup: optionalString(normalized.customerGroup),
+    businessModel: optionalString(normalized.businessModel),
+    developmentStage: optionalString(normalized.developmentStage),
+    latestFundingRound: optionalString(normalized.latestFundingRound),
+    keyInvestors: optionalString(normalized.keyInvestors),
+    recentEvent: optionalString(normalized.recentEvent),
+    memo: optionalString(normalized.reasonForSuggestion),
+    candidateType: normalized.suggestedCandidateType,
     reviewStatus: "Pending",
+    userNote: "AI-generated candidate; verify source before using in report.",
+    manuallyOverridden: false,
+    evidenceSources: [
+      createEvidenceSource({
+        sourceType: "manual",
+        sourceUrl: optionalString(normalized.website),
+        evidenceSnippet: normalized.evidenceSnippet,
+        confidenceLevel: "Low",
+      }),
+    ],
   });
 }
 
@@ -77,11 +86,13 @@ export async function generateCandidatesForProject(
   projectId: string
 ): Promise<GenerateCandidatesResult> {
   const project = await getProjectOrThrow(projectId);
-  const existingNames = buildExistingNameSet(project.candidates);
+  const existingNameKeys = new Set(
+    project.candidates.map((c) => normalizeCompanyNameKey(c.companyName))
+  );
 
-  let llmOutput;
+  let rawCandidates: unknown[];
   try {
-    llmOutput = await generateCandidatesWithLlm(
+    rawCandidates = await generateCandidatesWithLlm(
       project.target,
       project.candidates.map((c) => c.companyName)
     );
@@ -101,18 +112,46 @@ export async function generateCandidatesForProject(
     throw error;
   }
 
-  const batchNames = new Set<string>();
+  const batchNameKeys = new Set<string>();
   const toAdd: CandidateCompany[] = [];
-  let skippedDuplicateCount = 0;
+  const skippedDuplicates: SkippedDuplicateEntry[] = [];
+  const skippedMalformed: SkippedMalformedEntry[] = [];
 
-  for (const suggested of llmOutput.candidates) {
-    if (isDuplicate(suggested.companyName, existingNames, batchNames)) {
-      skippedDuplicateCount += 1;
+  for (const raw of rawCandidates) {
+    if (!raw || typeof raw !== "object") {
+      skippedMalformed.push({ reason: "Candidate is not an object" });
       continue;
     }
 
-    const candidate = suggestedToCandidate(suggested);
-    batchNames.add(normalizeCompanyName(candidate.companyName));
+    const normalized = normalizeGeneratedCandidate(
+      raw as Record<string, unknown>
+    );
+
+    if (!normalized.companyName) {
+      skippedMalformed.push({ reason: "Missing companyName" });
+      continue;
+    }
+
+    const validation = generatedCandidateNormalizedSchema.safeParse(normalized);
+    if (!validation.success) {
+      skippedMalformed.push({
+        companyName: normalized.companyName,
+        reason: validation.error.issues
+          .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+          .join("; "),
+      });
+      continue;
+    }
+
+    const nameKey = normalizeCompanyNameKey(validation.data.companyName);
+
+    if (existingNameKeys.has(nameKey) || batchNameKeys.has(nameKey)) {
+      skippedDuplicates.push({ companyName: validation.data.companyName });
+      continue;
+    }
+
+    const candidate = mapNormalizedToCandidateCompany(validation.data);
+    batchNameKeys.add(nameKey);
     toAdd.push(candidate);
   }
 
@@ -124,7 +163,10 @@ export async function generateCandidatesForProject(
 
   return {
     addedCount: toAdd.length,
-    skippedDuplicateCount,
-    added: toAdd,
+    skippedDuplicateCount: skippedDuplicates.length,
+    skippedMalformedCount: skippedMalformed.length,
+    candidates: toAdd,
+    skippedDuplicates,
+    skippedMalformed,
   };
 }

@@ -1,34 +1,46 @@
 import { z } from "zod";
+import type { NormalizedGeneratedCandidate } from "@/lib/normalizers/normalizeGeneratedCandidate";
 
-const suggestedCandidateSchema = z.object({
+const CANDIDATE_TYPES = [
+  "Direct Competitor",
+  "Indirect Competitor",
+  "Comparable Listed Company",
+  "Comparable Private Company",
+  "Not Relevant",
+  "Unclassified",
+] as const;
+
+export const generatedCandidateNormalizedSchema = z.object({
   companyName: z.string().min(1),
-  country: z.string().optional(),
-  listedStatus: z.enum(["listed", "private", "unknown"]).optional(),
-  website: z.string().optional(),
-  technology: z.string().optional(),
-  product: z.string().optional(),
-  indicationOrMarket: z.string().optional(),
-  customerGroup: z.string().optional(),
-  businessModel: z.string().optional(),
-  developmentStage: z.string().optional(),
-  memo: z.string().optional(),
-  sourceUrl: z.string().optional(),
-  rationale: z.string().optional(),
-});
+  suggestedCandidateType: z.enum(CANDIDATE_TYPES),
+  country: z.string(),
+  listedStatus: z.enum(["listed", "private", "unknown"]),
+  ticker: z.string(),
+  exchange: z.string(),
+  website: z.string(),
+  technology: z.string(),
+  product: z.string(),
+  indicationOrMarket: z.string(),
+  customerGroup: z.string(),
+  businessModel: z.string(),
+  developmentStage: z.string(),
+  latestFundingRound: z.string(),
+  keyInvestors: z.string(),
+  recentEvent: z.string(),
+  reasonForSuggestion: z.string(),
+  caveat: z.string(),
+  evidenceSnippet: z.string().min(1),
+}) satisfies z.ZodType<NormalizedGeneratedCandidate>;
 
-export const generateCandidatesOutputSchema = z.object({
-  candidates: z.array(suggestedCandidateSchema).min(1).max(25),
-});
+export const generatedCandidateArraySchema = z.array(
+  generatedCandidateNormalizedSchema
+);
 
-export type GenerateCandidatesLlmOutput = z.infer<
-  typeof generateCandidatesOutputSchema
+export type GeneratedCandidateNormalized = z.infer<
+  typeof generatedCandidateNormalizedSchema
 >;
 
-export type SuggestedCandidate = GenerateCandidatesLlmOutput["candidates"][number];
-
-export function parseGenerateCandidatesOutput(
-  raw: string
-): GenerateCandidatesLlmOutput {
+export function parseRawCandidatesResponse(raw: string): unknown[] {
   let parsed: unknown;
   try {
     parsed = JSON.parse(raw);
@@ -36,13 +48,13 @@ export function parseGenerateCandidatesOutput(
     throw new Error("Invalid JSON from LLM");
   }
 
-  const result = generateCandidatesOutputSchema.safeParse(parsed);
-  if (!result.success) {
-    const issues = result.error.issues
-      .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
-      .join("; ");
-    throw new Error(`Validation failed: ${issues}`);
+  if (
+    !parsed ||
+    typeof parsed !== "object" ||
+    !Array.isArray((parsed as { candidates?: unknown }).candidates)
+  ) {
+    throw new Error("Invalid JSON from LLM: missing candidates array");
   }
 
-  return result.data;
+  return (parsed as { candidates: unknown[] }).candidates;
 }

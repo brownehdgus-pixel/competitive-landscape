@@ -18,6 +18,7 @@
     "verify:step7": "tsx scripts/verify-step7.ts",
     "verify:step8": "tsx scripts/verify-step8.ts",
     "verify:step9": "tsx scripts/verify-step9.ts",
+    "verify:normalizers": "tsx scripts/verify-candidate-normalizers.ts",
     "seed:demo": "tsx scripts/seed-demo-project.ts",
     "seed": "tsx scripts/seed-demo-project.ts",
     "classify:seed": "tsx scripts/classify-seed.ts",

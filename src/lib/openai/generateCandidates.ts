@@ -3,10 +3,7 @@ import {
   ClassifyParseError,
   ClassifyValidationError,
 } from "@/lib/openai/errors";
-import {
-  parseGenerateCandidatesOutput,
-  type GenerateCandidatesLlmOutput,
-} from "@/lib/openai/generateCandidatesSchema";
+import { parseRawCandidatesResponse } from "@/lib/openai/generateCandidatesSchema";
 import type { TargetCompany } from "@/types";
 
 const SYSTEM_PROMPT = `You are an expert biotech/pharma competitive landscape analyst.
@@ -21,14 +18,29 @@ Include a mix relevant to the analysis purpose:
 Rules:
 - Use real company names when possible.
 - Provide technology, product, market, business model, and stage fields when known.
-- Include a short rationale in memo or rationale field.
-- Include sourceUrl when you know an official website.
+- Include a short rationale in reasonForSuggestion, memo, or rationale field.
+- Include website or sourceUrl when you know an official website.
 - Do not duplicate companies in your list.
-- These are AI suggestions for human review — note uncertainty where appropriate.
+- These are AI suggestions for human review — note uncertainty in caveat where appropriate.
+
+For listedStatus, return exactly one of:
+- "listed"
+- "private"
+- "unknown"
+
+Do not return "public", "unlisted", "startup", "NASDAQ-listed", "N/A", or any other value.
+
+For suggestedCandidateType, return exactly one of:
+- "Direct Competitor"
+- "Indirect Competitor"
+- "Comparable Listed Company"
+- "Comparable Private Company"
+
+If uncertain, choose the closest category and explain uncertainty in caveat.
 
 Return JSON only: { "candidates": [ ... ] }
 Each candidate object may include:
-companyName (required), country, listedStatus (listed|private|unknown), website, technology, product, indicationOrMarket, customerGroup, businessModel, developmentStage, memo, sourceUrl, rationale.`;
+companyName (required), suggestedCandidateType, country, listedStatus, website, technology, product, indicationOrMarket, customerGroup, businessModel, developmentStage, latestFundingRound, keyInvestors, recentEvent, reasonForSuggestion, memo, sourceUrl, rationale, caveat, evidenceSnippet.`;
 
 function buildUserPrompt(
   target: TargetCompany,
@@ -60,22 +72,20 @@ Suggest 12 to 20 new candidate companies.`;
 export async function generateCandidatesWithLlm(
   target: TargetCompany,
   existingNames: string[]
-): Promise<GenerateCandidatesLlmOutput> {
+): Promise<unknown[]> {
   const raw = await chatCompletionJson(
     SYSTEM_PROMPT,
     buildUserPrompt(target, existingNames)
   );
 
   try {
-    return parseGenerateCandidatesOutput(raw);
+    return parseRawCandidatesResponse(raw);
   } catch (error) {
     if (error instanceof Error) {
       if (error.message.startsWith("Invalid JSON")) {
         throw new ClassifyParseError(error.message);
       }
-      if (error.message.startsWith("Validation failed")) {
-        throw new ClassifyValidationError(error.message);
-      }
+      throw new ClassifyValidationError(error.message);
     }
     throw error;
   }

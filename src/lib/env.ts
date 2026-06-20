@@ -15,15 +15,3 @@ export const githubConfig = {
   branch: process.env.GITHUB_BRANCH ?? "main",
   dataPath: process.env.GITHUB_DATA_PATH ?? "data/landscapes.json",
 };
-
-export function assertGithubConfig(): void {
-  if (!githubConfig.token) {
-    throw new Error("GITHUB_TOKEN is not configured.");
-  }
-  if (!githubConfig.owner) {
-    throw new Error("GITHUB_OWNER is not configured.");
-  }
-  if (!githubConfig.repo) {
-    throw new Error("GITHUB_REPO is not configured.");
-  }
-}

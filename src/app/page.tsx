@@ -2,9 +2,24 @@ import Link from "next/link";
 import { AppShell } from "@/components/layout/AppShell";
 import { ProjectListTable } from "@/components/projects/ProjectListTable";
 import { landscapeStorage } from "@/lib/storage/landscapeStorage";
+import type { LandscapeProject } from "@/types";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function HomePage() {
-  const projects = await landscapeStorage.getAll();
+  let projects: LandscapeProject[] = [];
+  let loadError: string | null = null;
+
+  try {
+    projects = await landscapeStorage.getAll();
+  } catch (error) {
+    console.error("Failed to load landscape projects:", error);
+    loadError =
+      error instanceof Error
+        ? error.message
+        : "Failed to load landscape projects.";
+  }
 
   return (
     <AppShell>
@@ -24,7 +39,16 @@ export default async function HomePage() {
           New Project
         </Link>
       </div>
-      <ProjectListTable projects={projects} />
+      {loadError ? (
+        <div className="rounded-lg border border-red-200 bg-red-50 p-6">
+          <p className="text-sm font-medium text-red-800">
+            Failed to load landscape projects. Check storage configuration.
+          </p>
+          <p className="mt-2 text-xs text-memo-muted">{loadError}</p>
+        </div>
+      ) : (
+        <ProjectListTable projects={projects} />
+      )}
     </AppShell>
   );
 }

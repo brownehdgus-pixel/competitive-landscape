@@ -1,4 +1,4 @@
-import { assertGithubConfig, githubConfig } from "@/lib/env";
+import { githubConfig } from "@/lib/env";
 import { isLandscapesFile } from "@/lib/landscapesFile";
 import {
   DuplicateProjectIdError,
@@ -28,11 +28,24 @@ function contentsUrl(): string {
   return `https://api.github.com/repos/${owner}/${repo}/contents/${dataPath}`;
 }
 
+function validateGithubConfig(): void {
+  const missing: string[] = [];
+  if (!githubConfig.token) missing.push("GITHUB_TOKEN");
+  if (!githubConfig.owner) missing.push("GITHUB_OWNER");
+  if (!githubConfig.repo) missing.push("GITHUB_REPO");
+
+  if (missing.length > 0) {
+    throw new Error(
+      `GitHub Storage is not configured. Missing: ${missing.join(", ")}`
+    );
+  }
+}
+
 async function githubFetch(
   url: string,
   options?: RequestInit
 ): Promise<Response> {
-  assertGithubConfig();
+  validateGithubConfig();
 
   const headers: HeadersInit = {
     Authorization: `Bearer ${githubConfig.token}`,

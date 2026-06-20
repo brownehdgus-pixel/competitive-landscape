@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminOrReturn401 } from "@/lib/auth";
-import { storageErrorResponse } from "@/lib/api/storageErrorResponse";
+import { storageOrGenericErrorResponse } from "@/lib/api/storageErrorResponse";
 import { recalculateScores } from "@/lib/candidates/classifyService";
 
 type RecalculateRequestBody = {
@@ -30,11 +30,6 @@ export async function POST(request: Request) {
     const result = await recalculateScores(body.projectId, body.candidateIds);
     return NextResponse.json(result);
   } catch (error) {
-    const storageResponse = storageErrorResponse(error);
-    if (storageResponse) return storageResponse;
-
-    const message =
-      error instanceof Error ? error.message : "Recalculation failed";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return storageOrGenericErrorResponse(error, "Recalculation failed");
   }
 }

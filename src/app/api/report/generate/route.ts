@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminOrReturn401 } from "@/lib/auth";
-import { storageErrorResponse } from "@/lib/api/storageErrorResponse";
+import { storageOrGenericErrorResponse } from "@/lib/api/storageErrorResponse";
 import { generateProjectReport } from "@/lib/report/reportService";
 
 type GenerateReportBody = {
@@ -32,11 +32,6 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(report);
   } catch (error) {
-    const storageResponse = storageErrorResponse(error);
-    if (storageResponse) return storageResponse;
-
-    const message =
-      error instanceof Error ? error.message : "Report generation failed";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return storageOrGenericErrorResponse(error, "Report generation failed");
   }
 }

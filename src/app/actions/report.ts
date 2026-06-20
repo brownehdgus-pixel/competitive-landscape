@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAdminOrThrow } from "@/lib/auth";
 import { generateProjectReport } from "@/lib/report/reportService";
+import { withStorageError } from "@/lib/storage/withStorageError";
 
 function revalidateProject(projectId: string) {
   revalidatePath("/");
@@ -16,6 +17,8 @@ export async function generateReportAction(
 ) {
   await requireAdminOrThrow();
 
-  await generateProjectReport(projectId, { includePendingInAppendix });
+  await withStorageError(() =>
+    generateProjectReport(projectId, { includePendingInAppendix })
+  );
   revalidateProject(projectId);
 }

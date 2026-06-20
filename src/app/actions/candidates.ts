@@ -9,6 +9,7 @@ import {
   deleteEvidence,
   updateCandidate,
 } from "@/lib/candidates/candidateService";
+import { withStorageError } from "@/lib/storage/withStorageError";
 
 function revalidateProject(projectId: string) {
   revalidatePath("/");
@@ -21,7 +22,7 @@ export async function createCandidateAction(
 ) {
   await requireAdminOrThrow();
 
-  await createCandidate(projectId, formData);
+  await withStorageError(() => createCandidate(projectId, formData));
   revalidateProject(projectId);
 }
 
@@ -32,7 +33,9 @@ export async function updateCandidateAction(
 ) {
   await requireAdminOrThrow();
 
-  await updateCandidate(projectId, candidateId, formData);
+  await withStorageError(() =>
+    updateCandidate(projectId, candidateId, formData)
+  );
   revalidateProject(projectId);
 }
 
@@ -42,7 +45,7 @@ export async function deleteCandidateAction(
 ) {
   await requireAdminOrThrow();
 
-  await deleteCandidate(projectId, candidateId);
+  await withStorageError(() => deleteCandidate(projectId, candidateId));
   revalidateProject(projectId);
 }
 
@@ -53,7 +56,7 @@ export async function addEvidenceAction(
 ) {
   await requireAdminOrThrow();
 
-  await addEvidence(projectId, candidateId, formData);
+  await withStorageError(() => addEvidence(projectId, candidateId, formData));
   revalidateProject(projectId);
 }
 
@@ -64,6 +67,8 @@ export async function deleteEvidenceAction(
 ) {
   await requireAdminOrThrow();
 
-  await deleteEvidence(projectId, candidateId, evidenceId);
+  await withStorageError(() =>
+    deleteEvidence(projectId, candidateId, evidenceId)
+  );
   revalidateProject(projectId);
 }

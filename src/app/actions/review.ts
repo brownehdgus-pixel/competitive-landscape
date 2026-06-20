@@ -9,6 +9,7 @@ import {
   updateUserNote,
 } from "@/lib/candidates/reviewService";
 import type { ManualReclassifyType } from "@/lib/candidates/reviewConstants";
+import { withStorageError } from "@/lib/storage/withStorageError";
 import type { ReviewStatus } from "@/types";
 
 function revalidateProject(projectId: string) {
@@ -23,7 +24,9 @@ export async function updateReviewStatusAction(
 ) {
   await requireAdminOrThrow();
 
-  await updateReviewStatus(projectId, candidateId, reviewStatus);
+  await withStorageError(() =>
+    updateReviewStatus(projectId, candidateId, reviewStatus)
+  );
   revalidateProject(projectId);
 }
 
@@ -34,7 +37,9 @@ export async function reclassifyCandidateAction(
 ) {
   await requireAdminOrThrow();
 
-  await reclassifyCandidate(projectId, candidateId, candidateType);
+  await withStorageError(() =>
+    reclassifyCandidate(projectId, candidateId, candidateType)
+  );
   revalidateProject(projectId);
 }
 
@@ -45,7 +50,9 @@ export async function updateUserNoteAction(
 ) {
   await requireAdminOrThrow();
 
-  await updateUserNote(projectId, candidateId, userNote);
+  await withStorageError(() =>
+    updateUserNote(projectId, candidateId, userNote)
+  );
   revalidateProject(projectId);
 }
 
@@ -55,6 +62,8 @@ export async function resetToLlmClassificationAction(
 ) {
   await requireAdminOrThrow();
 
-  await resetToLlmClassification(projectId, candidateId);
+  await withStorageError(() =>
+    resetToLlmClassification(projectId, candidateId)
+  );
   revalidateProject(projectId);
 }

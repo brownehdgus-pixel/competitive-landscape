@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminOrReturn401 } from "@/lib/auth";
-import { storageErrorResponse } from "@/lib/api/storageErrorResponse";
+import { storageOrGenericErrorResponse } from "@/lib/api/storageErrorResponse";
 import {
   classifyCandidates,
   MAX_CLASSIFY_BATCH,
@@ -49,11 +49,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
-    const storageResponse = storageErrorResponse(error);
-    if (storageResponse) return storageResponse;
-
-    const message =
-      error instanceof Error ? error.message : "Classification failed";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return storageOrGenericErrorResponse(error, "Classification failed");
   }
 }

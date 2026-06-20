@@ -1,4 +1,5 @@
 import { githubConfig } from "@/lib/env";
+import { GITHUB_403_MESSAGE } from "@/lib/storage/storageErrorMessage";
 import { isLandscapesFile } from "@/lib/landscapesFile";
 import {
   DuplicateProjectIdError,
@@ -68,10 +69,7 @@ function throwGithubApiError(
         401
       );
     case 403:
-      throw new GitHubStorageError(
-        "GitHub API access denied or rate limit exceeded.",
-        403
-      );
+      throw new GitHubStorageError(GITHUB_403_MESSAGE, 403);
     case 404:
       if (context === "write") {
         throw new GitHubStorageError(

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AppShell } from "@/components/layout/AppShell";
 import { ProjectListTable } from "@/components/projects/ProjectListTable";
 import { landscapeStorage } from "@/lib/storage/landscapeStorage";
+import { getStorageErrorMessage } from "@/lib/storage/storageErrorMessage";
 import type { LandscapeProject } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -15,10 +16,7 @@ export default async function HomePage() {
     projects = await landscapeStorage.getAll();
   } catch (error) {
     console.error("Failed to load landscape projects:", error);
-    loadError =
-      error instanceof Error
-        ? error.message
-        : "Failed to load landscape projects.";
+    loadError = getStorageErrorMessage(error);
   }
 
   return (
@@ -42,7 +40,7 @@ export default async function HomePage() {
       {loadError ? (
         <div className="rounded-lg border border-red-200 bg-red-50 p-6">
           <p className="text-sm font-medium text-red-800">
-            Failed to load landscape projects. Check storage configuration.
+            Failed to load landscape projects.
           </p>
           <p className="mt-2 text-xs text-memo-muted">{loadError}</p>
         </div>

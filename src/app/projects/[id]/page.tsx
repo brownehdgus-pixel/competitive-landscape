@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WorkbenchClient } from "@/components/projects/WorkbenchClient";
 import { landscapeStorage } from "@/lib/storage/landscapeStorage";
+import { getStorageErrorMessage } from "@/lib/storage/storageErrorMessage";
 import type { LandscapeProject } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -21,8 +22,7 @@ export default async function WorkbenchPage({ params }: WorkbenchPageProps) {
     project = await landscapeStorage.getById(id);
   } catch (error) {
     console.error("Failed to load project:", error);
-    loadError =
-      error instanceof Error ? error.message : "Failed to load project.";
+    loadError = getStorageErrorMessage(error);
   }
 
   if (!loadError && !project) {

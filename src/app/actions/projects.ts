@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { requireAdminOrThrow } from "@/lib/auth";
 import { createLandscapeProject } from "@/lib/factories";
 import { landscapeStorage } from "@/lib/storage/landscapeStorage";
+import { withStorageError } from "@/lib/storage/withStorageError";
 import type { AnalysisPurpose } from "@/types";
 
 const ANALYSIS_PURPOSES: AnalysisPurpose[] = [
@@ -48,7 +49,7 @@ export async function createProjectAction(formData: FormData) {
     ),
   });
 
-  await landscapeStorage.create(project);
+  await withStorageError(() => landscapeStorage.create(project));
   revalidatePath("/");
   redirect(`/projects/${project.id}`);
 }
@@ -56,6 +57,6 @@ export async function createProjectAction(formData: FormData) {
 export async function deleteProjectAction(id: string) {
   await requireAdminOrThrow();
 
-  await landscapeStorage.delete(id);
+  await withStorageError(() => landscapeStorage.delete(id));
   revalidatePath("/");
 }

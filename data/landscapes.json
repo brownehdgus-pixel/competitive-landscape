@@ -173,6 +173,23 @@
         "includePendingInAppendix": true
       },
       "lastReportGeneratedAt": "2026-06-19T06:12:06.238Z"
+    },
+    {
+      "id": "5850cc36-1d95-47f9-9b6b-1c754cefbe76",
+      "target": {
+        "companyName": "CoBX Bio",
+        "description": "공유결합 저해제 및 분자접착제 분해약물 기반의 저분자 신약개발 바이오텍. 화학단백체학, 분자모델링, AI를 결합한 플랫폼을 활용해 기존 합성의약품의 내성 및 효능 한계를 극복하는 표적 단백질 치료제를 개발함.",
+        "coreTechnology": "RaPIDome 플랫폼; chemoproteomics, covalent inhibitor discovery, molecular glue degrader, AI/molecular modeling 기반 druggability 평가 및 후보물질 도출",
+        "productOrService": "비가역적 공유결합 저해제 및 분자접착제 분해약물 기반 저분자 신약 파이프라인",
+        "indicationOrMarket": "혈액암 및 종양학 중심 표적항암제 시장; 공개자료상 AML 등 혈액암 관련 파이프라인 가능성이 언급되나 세부 적응증은 제한적으로 공개됨",
+        "customerGroup": "글로벌 제약사·바이오텍 기술이전 파트너, 항암제 개발사, 공동연구/라이선스 파트너",
+        "businessModel": "자체 플랫폼 기반 후보물질 발굴 후 전임상·초기임상 단계에서 공동개발, 기술이전, 라이선스아웃을 추진하는 신약개발형 플랫폼 바이오텍",
+        "developmentStage": "비상장 초기 바이오텍; Pre-A 투자유치 이력 보유, 후보물질 최적화·비임상·IND 준비 및 초기 임상 진입 준비 단계",
+        "analysisPurpose": "Both"
+      },
+      "candidates": [],
+      "createdAt": "2026-06-20T14:12:42.559Z",
+      "updatedAt": "2026-06-20T14:12:42.689Z"
     }
   ]
 }

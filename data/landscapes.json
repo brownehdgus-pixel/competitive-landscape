@@ -188,9 +188,406 @@
         "analysisPurpose": "Both",
         "website": "https://www.pintherapeutics.com/kor/company/overview.html"
       },
-      "candidates": [],
+      "candidates": [
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "de9233c5-a794-460e-b68f-3baeb003850e",
+              "checkedAt": "2026-06-20T14:56:44.288Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.c4therapeutics.com",
+              "evidenceSnippet": "C4 Therapeutics focuses on targeted protein degradation, similar to CoBX Bio's molecular glue degrader approach.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Direct Competitor",
+          "reviewStatus": "Pending",
+          "companyName": "C4 Therapeutics",
+          "country": "USA",
+          "website": "https://www.c4therapeutics.com",
+          "technology": "Targeted protein degradation",
+          "product": "Degrader platform",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Partnerships and collaborations for drug development",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Series C",
+          "keyInvestors": "Bessemer Venture Partners, Omega Funds",
+          "recentEvent": "Announced clinical trial results",
+          "memo": "C4 Therapeutics focuses on targeted protein degradation, similar to CoBX Bio's molecular glue degrader approach.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "fe527bf8-8cd5-4708-8ee9-c5d1cc6deea1",
+          "createdAt": "2026-06-20T14:56:44.288Z",
+          "updatedAt": "2026-06-20T14:56:44.288Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "4d906718-9089-43aa-8cbe-0f32a5ea8387",
+              "checkedAt": "2026-06-20T14:56:44.288Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.kymeratx.com",
+              "evidenceSnippet": "Kymera's focus on small molecule protein degraders aligns closely with CoBX Bio's technology.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Direct Competitor",
+          "reviewStatus": "Pending",
+          "companyName": "Kymera Therapeutics",
+          "country": "USA",
+          "website": "https://www.kymeratx.com",
+          "technology": "Protein degradation technology",
+          "product": "Small molecule protein degraders",
+          "indicationOrMarket": "Oncology and autoimmune diseases",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Collaborative drug development",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "IPO",
+          "keyInvestors": "OrbiMed Advisors, RA Capital Management",
+          "recentEvent": "Successful IPO",
+          "memo": "Kymera's focus on small molecule protein degraders aligns closely with CoBX Bio's technology.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "0cab7c63-5093-4e74-82fc-cababd5943b1",
+          "createdAt": "2026-06-20T14:56:44.288Z",
+          "updatedAt": "2026-06-20T14:56:44.288Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "55ebf068-4691-4bb1-904f-d62ccd4f1b43",
+              "checkedAt": "2026-06-20T14:56:44.288Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.arvinas.com",
+              "evidenceSnippet": "Arvinas utilizes a similar approach to targeted protein degradation as CoBX Bio.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Direct Competitor",
+          "reviewStatus": "Pending",
+          "companyName": "Arvinas",
+          "country": "USA",
+          "website": "https://www.arvinas.com",
+          "technology": "PROTAC technology",
+          "product": "Protein degraders",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Partnerships and collaborations",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Public offering",
+          "keyInvestors": "Bessemer Venture Partners, Cormorant Asset Management",
+          "recentEvent": "Announced new clinical trials",
+          "memo": "Arvinas utilizes a similar approach to targeted protein degradation as CoBX Bio.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "ffcc0fcc-397e-476d-80b8-29a2f2f97428",
+          "createdAt": "2026-06-20T14:56:44.288Z",
+          "updatedAt": "2026-06-20T14:56:44.288Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "912b034f-7d85-406b-b015-d3b883c59323",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.molecularpartners.com",
+              "evidenceSnippet": "Molecular Partners develops innovative therapeutics for oncology, which may complement CoBX Bio's offerings.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Indirect Competitor",
+          "reviewStatus": "Pending",
+          "companyName": "Molecular Partners",
+          "country": "Switzerland",
+          "website": "https://www.molecularpartners.com",
+          "technology": "DARPins (Designed Ankyrin Repeat Proteins)",
+          "product": "Therapeutics for oncology",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Collaborative development and licensing",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Public offering",
+          "keyInvestors": "Novartis, other institutional investors",
+          "recentEvent": "Partnership with major pharma",
+          "memo": "Molecular Partners develops innovative therapeutics for oncology, which may complement CoBX Bio's offerings.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "fa5d2c4b-c67e-45f9-a603-940b967ed1b5",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "113bbab5-9cb9-402f-a392-5a87b9c4a806",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.zymeworks.com",
+              "evidenceSnippet": "Zymeworks develops multispecific therapeutics that may target similar markets as CoBX Bio.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Indirect Competitor",
+          "reviewStatus": "Pending",
+          "companyName": "Zymeworks",
+          "country": "Canada",
+          "website": "https://www.zymeworks.com",
+          "technology": "Multispecific therapeutics",
+          "product": "Therapeutics for oncology",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Partnerships and collaborations",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Public offering",
+          "keyInvestors": "BMO Capital Markets, other institutional investors",
+          "recentEvent": "New clinical trial announcements",
+          "memo": "Zymeworks develops multispecific therapeutics that may target similar markets as CoBX Bio.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "158b7387-c6c2-421f-9df2-f74c18cfa00a",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "97cda10c-12d1-4618-a4c3-c30a47ea91b5",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.curevac.com",
+              "evidenceSnippet": "CureVac's innovative approach to mRNA therapeutics may provide insights into novel drug development strategies.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Listed Company",
+          "reviewStatus": "Pending",
+          "companyName": "CureVac",
+          "country": "Germany",
+          "website": "https://www.curevac.com",
+          "technology": "mRNA technology",
+          "product": "mRNA-based therapeutics",
+          "indicationOrMarket": "Oncology and infectious diseases",
+          "customerGroup": "Pharmaceutical companies, research institutions",
+          "businessModel": "Partnerships and collaborations",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Public offering",
+          "keyInvestors": "Boehringer Ingelheim, other institutional investors",
+          "recentEvent": "New partnerships announced",
+          "memo": "CureVac's innovative approach to mRNA therapeutics may provide insights into novel drug development strategies.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "143bf8c0-6a87-407e-9c56-cf0d3cae1405",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "9a8b4e6f-f260-494d-995a-5f23837c868d",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.blueprintmedicines.com",
+              "evidenceSnippet": "Blueprint Medicines focuses on targeted therapies in oncology, similar to CoBX Bio's market.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Listed Company",
+          "reviewStatus": "Pending",
+          "companyName": "Blueprint Medicines",
+          "country": "USA",
+          "website": "https://www.blueprintmedicines.com",
+          "technology": "Targeted therapies",
+          "product": "Small molecule drugs",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Partnerships and collaborations",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Public offering",
+          "keyInvestors": "RA Capital Management, other institutional investors",
+          "recentEvent": "New drug approvals",
+          "memo": "Blueprint Medicines focuses on targeted therapies in oncology, similar to CoBX Bio's market.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "46255698-bccc-4e69-8d8d-614cbec097ba",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "06086f0e-31e4-4bc3-bcdc-6e766deb96cf",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.iovance.com",
+              "evidenceSnippet": "Iovance's focus on innovative oncology therapies may provide insights into market trends.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Listed Company",
+          "reviewStatus": "Pending",
+          "companyName": "Iovance Biotherapeutics",
+          "country": "USA",
+          "website": "https://www.iovance.com",
+          "technology": "Cell therapy",
+          "product": "Tumor-infiltrating lymphocyte therapy",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Direct sales and partnerships",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Public offering",
+          "keyInvestors": "Bessemer Venture Partners, other institutional investors",
+          "recentEvent": "Clinical trial updates",
+          "memo": "Iovance's focus on innovative oncology therapies may provide insights into market trends.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "23f9b7d9-54b6-48ae-a491-f2d2db8c3179",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "6203a89f-2e91-4252-b481-e69e2a658354",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.astrazeneca.com",
+              "evidenceSnippet": "AstraZeneca is a major player in oncology, providing insights into market dynamics.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Listed Company",
+          "reviewStatus": "Pending",
+          "companyName": "AstraZeneca",
+          "country": "UK",
+          "website": "https://www.astrazeneca.com",
+          "technology": "Pharmaceuticals",
+          "product": "Oncology drugs",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Healthcare providers, patients",
+          "businessModel": "Direct sales and partnerships",
+          "developmentStage": "Commercial stage",
+          "latestFundingRound": "N/A",
+          "keyInvestors": "Various institutional investors",
+          "recentEvent": "New drug launches",
+          "memo": "AstraZeneca is a major player in oncology, providing insights into market dynamics.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "a288a170-9580-4b91-963f-8025cd762fc6",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "listed",
+          "evidenceSources": [
+            {
+              "id": "e48a6e7b-16ff-46db-8f40-7f2a59cea139",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.bms.com",
+              "evidenceSnippet": "Bristol Myers Squibb is a leader in oncology, relevant for understanding competitive landscape.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Listed Company",
+          "reviewStatus": "Pending",
+          "companyName": "Bristol Myers Squibb",
+          "country": "USA",
+          "website": "https://www.bms.com",
+          "technology": "Pharmaceuticals",
+          "product": "Oncology drugs",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Healthcare providers, patients",
+          "businessModel": "Direct sales and partnerships",
+          "developmentStage": "Commercial stage",
+          "latestFundingRound": "N/A",
+          "keyInvestors": "Various institutional investors",
+          "recentEvent": "New drug approvals",
+          "memo": "Bristol Myers Squibb is a leader in oncology, relevant for understanding competitive landscape.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "75f7f3cb-5cb6-4f7d-b080-b033bb23cba1",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "private",
+          "evidenceSources": [
+            {
+              "id": "47ec120a-b0d7-4899-a247-56be5354e69c",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.tcr2.com",
+              "evidenceSnippet": "TCR2 focuses on T cell therapies in oncology, relevant for understanding competitive dynamics.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Private Company",
+          "reviewStatus": "Pending",
+          "companyName": "TCR2 Therapeutics",
+          "country": "USA",
+          "website": "https://www.tcr2.com",
+          "technology": "T cell therapy",
+          "product": "T cell receptor therapies",
+          "indicationOrMarket": "Oncology",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Partnerships and collaborations",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Series C",
+          "keyInvestors": "Bessemer Venture Partners, other institutional investors",
+          "recentEvent": "Clinical trial updates",
+          "memo": "TCR2 focuses on T cell therapies in oncology, relevant for understanding competitive dynamics.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "1854ee65-7766-4359-a298-817c857b9bb8",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        },
+        {
+          "listedStatus": "private",
+          "evidenceSources": [
+            {
+              "id": "a4e7a912-43bb-4301-8ec8-c0f41cfc5783",
+              "checkedAt": "2026-06-20T14:56:44.289Z",
+              "sourceType": "manual",
+              "sourceUrl": "https://www.sanabiotechnology.com",
+              "evidenceSnippet": "Sana's focus on gene therapy may provide insights into innovative drug development.",
+              "confidenceLevel": "Low"
+            }
+          ],
+          "candidateType": "Comparable Private Company",
+          "reviewStatus": "Pending",
+          "companyName": "Sana Biotechnology",
+          "country": "USA",
+          "website": "https://www.sanabiotechnology.com",
+          "technology": "Gene therapy",
+          "product": "Gene editing and cell therapy",
+          "indicationOrMarket": "Oncology and genetic diseases",
+          "customerGroup": "Pharmaceutical companies",
+          "businessModel": "Partnerships and collaborations",
+          "developmentStage": "Clinical stage",
+          "latestFundingRound": "Series B",
+          "keyInvestors": "Arch Venture Partners, other institutional investors",
+          "recentEvent": "New partnerships announced",
+          "memo": "Sana's focus on gene therapy may provide insights into innovative drug development.",
+          "userNote": "AI-generated candidate; verify source before using in report.",
+          "manuallyOverridden": false,
+          "id": "80ffe6a9-9951-420c-9914-f2a5af9c95fd",
+          "createdAt": "2026-06-20T14:56:44.289Z",
+          "updatedAt": "2026-06-20T14:56:44.289Z"
+        }
+      ],
       "createdAt": "2026-06-20T14:12:42.559Z",
-      "updatedAt": "2026-06-20T14:43:21.471Z"
+      "updatedAt": "2026-06-20T14:56:44.363Z"
     }
   ]
 }

@@ -16,6 +16,7 @@ type TargetTabProps = {
 
 const ROWS: { key: keyof TargetCompany; label: string }[] = [
   { key: "companyName", label: "Company Name" },
+  { key: "website", label: "Website" },
   { key: "description", label: "Description" },
   { key: "coreTechnology", label: "Core Technology" },
   { key: "productOrService", label: "Product / Service" },

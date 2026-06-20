@@ -31,6 +31,7 @@ export async function createProjectAction(formData: FormData) {
 
   const project = createLandscapeProject({
     companyName,
+    website: String(formData.get("website") ?? "").trim() || undefined,
     description: String(formData.get("description") ?? "").trim() || undefined,
     coreTechnology:
       String(formData.get("coreTechnology") ?? "").trim() || undefined,

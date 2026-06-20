@@ -40,6 +40,19 @@ export function ProjectForm() {
       </div>
 
       <div>
+        <label htmlFor="website" className={labelClass}>
+          웹사이트 / Website
+        </label>
+        <input
+          id="website"
+          name="website"
+          type="url"
+          className={inputClass}
+          placeholder="https://example.com"
+        />
+      </div>
+
+      <div>
         <label htmlFor="description" className={labelClass}>
           회사 설명 / Description
         </label>

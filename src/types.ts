@@ -32,6 +32,7 @@ export type ConfidenceLevel = "High" | "Medium" | "Low";
 
 export type TargetCompany = {
   companyName: string;
+  website?: string;
   description?: string;
   coreTechnology?: string;
   productOrService?: string;

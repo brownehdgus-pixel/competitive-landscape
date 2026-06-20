@@ -7,7 +7,9 @@ import {
   deleteCandidateAction,
   updateCandidateAction,
 } from "@/app/actions/candidates";
+import { AnalyzeTargetButton } from "@/components/projects/AnalyzeTargetButton";
 import { CandidateForm } from "@/components/projects/CandidateForm";
+import { GenerateCandidatesButton } from "@/components/projects/GenerateCandidatesButton";
 import { GenerateReportButton } from "@/components/projects/GenerateReportButton";
 import { RunClassificationButton } from "@/components/projects/RunClassificationButton";
 import { TargetSummaryPanel } from "@/components/projects/TargetSummaryPanel";
@@ -69,7 +71,7 @@ export function WorkbenchClient({ project }: WorkbenchClientProps) {
             {formatDateTime(project.updatedAt)}
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-start justify-end gap-2">
           <button
             type="button"
             onClick={openAddCandidate}
@@ -77,6 +79,18 @@ export function WorkbenchClient({ project }: WorkbenchClientProps) {
           >
             Add Candidate
           </button>
+          <AnalyzeTargetButton
+            projectId={project.id}
+            website={project.target.website}
+            onComplete={refresh}
+          />
+          <GenerateCandidatesButton
+            projectId={project.id}
+            onComplete={() => {
+              setInitialTab("candidates");
+              refresh();
+            }}
+          />
           <RunClassificationButton
             projectId={project.id}
             unclassifiedCount={
